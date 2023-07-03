@@ -67,7 +67,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_password"
-                android:backgroundTint="#FFFFFF"/>
+                android:backgroundTint="#FFFFFF"
+                android:inputType="textPassword"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <ProgressBar
