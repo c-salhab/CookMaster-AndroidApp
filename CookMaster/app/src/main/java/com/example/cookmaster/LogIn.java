@@ -33,47 +33,46 @@ public class LogIn extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                final String username,password;
+                final String username, password;
                 username = String.valueOf(textInputEditTextUsername.getText());
                 password = String.valueOf(textInputEditTextPassword.getText());
 
-                if(!username.equals("") && !password.equals("")){
+                if (!username.equals("") && !password.equals("")) {
                     progressBar.setVisibility(View.VISIBLE);
                     Handler handler = new Handler();
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
                             String[] field = new String[2];
-                            field[0] = "username";
+                            field[0] = "username"; // Utiliser "username" au lieu de "name"
                             field[1] = "password";
 
                             String[] data = new String[2];
                             data[0] = username;
                             data[1] = password;
 
-                            PutData putData = new PutData("http://192.168.240.161/android/login.php", "POST", field, data);
-                            if(putData.startPut()){
-                                if(putData.onComplete()){
+                            PutData putData = new PutData("https://yourcookmaster.com/android/login.php", "POST", field, data);
+                            if (putData.startPut()) {
+                                if (putData.onComplete()) {
                                     progressBar.setVisibility(View.GONE);
                                     String result = putData.getResult();
-                                    if(result.equals("Login Success")){
+                                    if (result.equals("Login Success")) {
                                         Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                         startActivity(intent);
                                         finish();
-                                    }else {
+                                    } else {
                                         Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             }
                         }
                     });
-                }else{
+                } else {
                     Toast.makeText(getApplicationContext(), "All fields required", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
 
     }
 }
