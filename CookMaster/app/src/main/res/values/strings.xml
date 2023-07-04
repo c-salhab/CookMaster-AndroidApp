@@ -3,4 +3,11 @@
     <string name="username">Email</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
+    <string name="return_to_homepage">return to homepage</string>
+    <string name="click_for_a_surprise">click for a surprise</string>
+    <string name="popup_titre">Question ?</string>
+    <string name="popup_message">Do you really want to leave the app ?</string>
+    <string name="popup_oui">Yes</string>
+    <string name="popup_non">No</string>
+    <string name="login_cookmaster">Login CookMaster 🍔</string>
 </resources>

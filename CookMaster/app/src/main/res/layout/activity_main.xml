@@ -5,11 +5,19 @@
     android:padding="16dp"
     tools:context=".MainActivity">
 
+    <Button
+        android:backgroundTint = "@color/colorAccent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/return_to_homepage"
+        android:id="@+id/button_2"
+        android:textColor="@color/white"/>
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:scaleType="centerInside" />
-    
+        android:layout_height="match_parent"
+        android:layout_gravity="center" />
+
 </RelativeLayout>
