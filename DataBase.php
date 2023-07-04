@@ -34,23 +34,25 @@ class DataBase
         return mysqli_real_escape_string($this->connect, stripslashes(htmlspecialchars($data)));
     }
 
-    function logIn($table, $username, $password)
+    function logIn($table, $name, $password)
     {
-        $username = $this->prepareData($username);
+        $name = $this->prepareData($name);
         $password = $this->prepareData($password);
-        $this->sql = "select * from " . $table . " where name = '" . $username . "'";
+        $this->sql = "SELECT * FROM " . $table . " WHERE name = '" . $name . "'";
         $result = mysqli_query($this->connect, $this->sql);
         $row = mysqli_fetch_assoc($result);
         if (mysqli_num_rows($result) != 0) {
-            $dbusername = $row['username'];
+            $dbname = $row['name'];
             $dbpassword = $row['password'];
-            if ($dbusername == $username && password_verify($password, $dbpassword)) {
+            if ($dbname == $name && password_verify($password, $dbpassword)) {
                 $login = true;
-            } else $login = false;
-        } else $login = false;
+            } else {
+                $login = false;
+            }
+        } else {
+            $login = false;
+        }
 
         return $login;
     }
-
 }
-

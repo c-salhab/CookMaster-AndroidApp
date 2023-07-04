@@ -9,12 +9,10 @@ class DataBaseConfig
 
     public function __construct()
     {
-
-        $this->servername = 'localhost';
-        $this->username = 'root';
-        $this->password = 'root';
-        $this->databasename = 'android';
-
+        $this->servername = 'yourcookmaster.com';
+        $this->username = 'forge';
+        $this->password = 'E4jAlIstBZFrd5rIjG5p';
+        $this->databasename = 'cook_master';
     }
 }
 
