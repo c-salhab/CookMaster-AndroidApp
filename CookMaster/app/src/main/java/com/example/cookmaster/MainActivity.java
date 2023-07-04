@@ -18,11 +18,10 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Reader
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Récupérer l'instance du NfcAdapter
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
         if (nfcAdapter == null) {
-            // Le dispositif ne supporte pas NFC
+
             Toast.makeText(this, "NFC n'est pas supporté sur cet appareil.", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -31,9 +30,9 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Reader
     @Override
     protected void onResume() {
         super.onResume();
-        // Vérifier si le NFC est activé
+
         if (nfcAdapter.isEnabled()) {
-            // Activer la détection de jetons NFC en priorité
+
             nfcAdapter.enableReaderMode(this, this, NfcAdapter.FLAG_READER_NFC_A | NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK, null);
         }
     }
@@ -41,19 +40,17 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Reader
     @Override
     protected void onPause() {
         super.onPause();
-        // Désactiver la détection de jetons NFC
+
         nfcAdapter.disableReaderMode(this);
     }
 
     @Override
     public void onTagDiscovered(Tag tag) {
-        // Lire les données du jeton NFC ici
         String url = "https://yourcookmaster.com/android/sananes.png";
 
-        // Afficher l'image dans votre application
         runOnUiThread(() -> {
             ImageView imageView = findViewById(R.id.imageView);
-            Picasso.get().load(url).into(imageView); // Utilisez Picasso ou une autre bibliothèque pour charger l'image depuis l'URL
+            Picasso.get().load(url).into(imageView);
         });
     }
 }

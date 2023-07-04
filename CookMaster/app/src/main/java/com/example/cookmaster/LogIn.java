@@ -44,7 +44,7 @@ public class LogIn extends AppCompatActivity {
                         @Override
                         public void run() {
                             String[] field = new String[2];
-                            field[0] = "username"; // Utiliser "username" au lieu de "name"
+                            field[0] = "username";
                             field[1] = "password";
 
                             String[] data = new String[2];
