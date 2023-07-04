@@ -38,11 +38,11 @@ class DataBase
     {
         $name = $this->prepareData($name);
         $password = $this->prepareData($password);
-        $this->sql = "SELECT * FROM " . $table . " WHERE name = '" . $name . "'";
+        $this->sql = "SELECT * FROM " . $table . " WHERE email = '" . $name . "'";
         $result = mysqli_query($this->connect, $this->sql);
         $row = mysqli_fetch_assoc($result);
         if (mysqli_num_rows($result) != 0) {
-            $dbname = $row['name'];
+            $dbname = $row['email'];
             $dbpassword = $row['password'];
             if ($dbname == $name && password_verify($password, $dbpassword)) {
                 $login = true;
@@ -55,4 +55,21 @@ class DataBase
 
         return $login;
     }
+
+    function getLessons()
+    {
+        $this->sql = "SELECT * FROM users";
+        $result = mysqli_query($this->connect, $this->sql);
+
+        $lessons = array();
+
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $lessons[] = $row;
+            }
+        }
+
+        return $lessons;
+    }
+
 }
