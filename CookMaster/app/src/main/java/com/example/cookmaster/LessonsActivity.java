@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -27,24 +28,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class LessonsActivity extends AppCompatActivity {
 
     private AdView mAdView;
     private Button btn_1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lessons);
-
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-
-        mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
 
         this.btn_1 = findViewById(R.id.button_1);
         this.btn_1.setOnClickListener(new View.OnClickListener() {
@@ -52,9 +49,10 @@ public class LessonsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(LessonsActivity.this, MainActivity.class);
                 startActivity(i);
-
             }
         });
+
+        fetchDataFromAPI();
 
 
         Handler handler = new Handler(Looper.getMainLooper());
@@ -96,8 +94,8 @@ public class LessonsActivity extends AppCompatActivity {
                 }
             }
         });
-    }
 
+    }
 
     public void call(){
         new AlertDialog.Builder(LessonsActivity.this)
@@ -122,5 +120,52 @@ public class LessonsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         call();
+    }
+
+    public void fetchDataFromAPI() {
+        String apiUrl = "https://yourcookmaster.com/android/login.php";
+        try {
+
+            URL url = new URL(apiUrl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+
+            // Lire la réponse JSON
+            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
+
+            // Analyser la réponse JSON
+            JSONObject jsonResponse = new JSONObject(response.toString());
+            boolean login = jsonResponse.getBoolean("login");
+            boolean showAds = jsonResponse.getBoolean("showAds");
+
+            // Maintenant, tu as les valeurs de login et showAds dans ton code Java
+            // Fais ce que tu souhaites en fonction de ces valeurs
+            if (login) {
+                if (showAds) {
+                    // Afficher les publicités
+                    MobileAds.initialize(this, new OnInitializationCompleteListener() {
+                        @Override
+                        public void onInitializationComplete(InitializationStatus initializationStatus) {
+                            AdRequest adRequest = new AdRequest.Builder().build();
+                            mAdView.loadAd(adRequest);
+                        }
+                    });
+
+                    mAdView = findViewById(R.id.adView);
+                } else {
+                    // Ne pas afficher les publicités
+                }
+            } else {
+                // Login échoué, prendre une autre action appropriée
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

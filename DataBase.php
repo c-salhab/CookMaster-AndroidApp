@@ -44,16 +44,22 @@ class DataBase
         if (mysqli_num_rows($result) != 0) {
             $dbname = $row['email'];
             $dbpassword = $row['password'];
+            $subscriptionId = $row['subscription_id'];
             if ($dbname == $name && password_verify($password, $dbpassword)) {
+                if ($subscriptionId === null) {
+                    $showAds = true; // Afficher les publicités
+                } else {
+                    $showAds = false; // Ne pas afficher les publicités
+                }
                 $login = true;
             } else {
                 $login = false;
             }
-        } else {
-            $login = false;
         }
 
-        return $login;
+        $response = array('login' => $login, 'showAds' => $showAds);
+        return $response;
+
     }
 
     function getLessons()
