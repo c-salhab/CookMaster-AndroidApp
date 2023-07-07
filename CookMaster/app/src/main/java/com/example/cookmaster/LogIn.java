@@ -2,7 +2,9 @@ package com.example.cookmaster;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -15,19 +17,19 @@ import com.vishnusivadas.advanced_httpurlconnection.PutData;
 
 public class LogIn extends AppCompatActivity {
 
-    TextInputEditText textInputEditTextUsername, textInputEditTextPassword;
-    Button buttonLogin;
-    ProgressBar progressBar;
+    private TextInputEditText textInputEditTextUsername, textInputEditTextPassword;
+    private Button buttonLogin;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
-        textInputEditTextUsername = findViewById(R.id.username);
-        textInputEditTextPassword = findViewById(R.id.password);
-        buttonLogin = findViewById(R.id.buttonLogin);
-        progressBar = findViewById(R.id.progress);
+        this.textInputEditTextUsername = findViewById(R.id.username);
+        this.textInputEditTextPassword = findViewById(R.id.password);
+        this.buttonLogin = findViewById(R.id.buttonLogin);
+        this.progressBar = findViewById(R.id.progress);
 
         buttonLogin.setOnClickListener(new View.OnClickListener(){
 
@@ -58,7 +60,9 @@ public class LogIn extends AppCompatActivity {
                                     String result = putData.getResult();
                                     if (result.equals("Login Success")) {
                                         Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                                        String email = String.valueOf(textInputEditTextUsername.getText());
                                         Intent intent = new Intent(getApplicationContext(), LessonsActivity.class);
+                                        intent.putExtra("email", email);
                                         startActivity(intent);
                                         finish();
                                     } else {
