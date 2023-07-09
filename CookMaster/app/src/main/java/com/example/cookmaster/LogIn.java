@@ -2,7 +2,6 @@ package com.example.cookmaster;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -26,20 +25,19 @@ public class LogIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
-        this.textInputEditTextUsername = findViewById(R.id.username);
-        this.textInputEditTextPassword = findViewById(R.id.password);
-        this.buttonLogin = findViewById(R.id.buttonLogin);
-        this.progressBar = findViewById(R.id.progress);
+        textInputEditTextUsername = findViewById(R.id.username);
+        textInputEditTextPassword = findViewById(R.id.password);
+        buttonLogin = findViewById(R.id.buttonLogin);
+        progressBar = findViewById(R.id.progress);
 
-        buttonLogin.setOnClickListener(new View.OnClickListener(){
-
+        buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final String username, password;
                 username = String.valueOf(textInputEditTextUsername.getText());
                 password = String.valueOf(textInputEditTextPassword.getText());
 
-                if (!username.equals("") && !password.equals("")) {
+                if (!username.isEmpty() && !password.isEmpty()) {
                     progressBar.setVisibility(View.VISIBLE);
                     Handler handler = new Handler();
                     handler.post(new Runnable() {
@@ -59,12 +57,15 @@ public class LogIn extends AppCompatActivity {
                                     progressBar.setVisibility(View.GONE);
                                     String result = putData.getResult();
                                     if (result.equals("Login Success")) {
+                                        SharedPreferences sharedPrefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = sharedPrefs.edit();
+                                        editor.putString("email", username);
+                                        editor.apply();
+
                                         Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
-                                        String email = String.valueOf(textInputEditTextUsername.getText());
-                                        Intent intent = new Intent(getApplicationContext(), LessonsActivity.class);
-                                        intent.putExtra("email", email);
-                                        startActivity(intent);
-                                        finish();
+                                        Intent lessonsIntent = new Intent(LogIn.this, LessonsActivity.class);
+                                        lessonsIntent.putExtra("email", username);
+                                        startActivity(lessonsIntent);
                                     } else {
                                         Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
                                     }
@@ -73,7 +74,7 @@ public class LogIn extends AppCompatActivity {
                         }
                     });
                 } else {
-                    Toast.makeText(getApplicationContext(), "All fields required", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "All fields are required", Toast.LENGTH_SHORT).show();
                 }
             }
         });

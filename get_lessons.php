@@ -1,16 +1,22 @@
 <?php
+
+session_start();
+
 require "DataBase.php";
 
 $db = new DataBase();
+if (isset($_SESSION['email'])) {
+    if ($db->dbConnect()) {
+        $lessons = $db->getLessons();
+        if (!empty($lessons)) {
 
-if ($db->dbConnect()) {
-    $lessons = $db->getLessons();
-    if (!empty($lessons)) {
-
-        echo json_encode($lessons);
+            echo json_encode($lessons);
+        } else {
+            echo "No lessons found.";
+        }
     } else {
-        echo "No lessons found.";
+        echo "Error: Database connection";
     }
 } else {
-    echo "Error: Database connection";
+    echo "User is not logged in";
 }

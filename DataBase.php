@@ -45,15 +45,15 @@ class DataBase
             $dbname = $row['email'];
             $dbpassword = $row['password'];
             if ($dbname == $name && password_verify($password, $dbpassword)) {
-                $login = true;
+                session_start();
+                $_SESSION['email'] = $name;
+                return true;
             } else {
-                $login = false;
+                return false;
             }
         } else {
-            $login = false;
+            return false;
         }
-
-        return $login;
     }
 
     function getLessons()

@@ -10,4 +10,8 @@
     <string name="popup_oui">Yes</string>
     <string name="popup_non">No</string>
     <string name="login_cookmaster">Login CookMaster 🍔</string>
+    <string name="my_profile">My Profile</string>
+    <string name="name">Name:</string>
+    <string name="email">Email:</string>
+    <string name="hi">Welcome to Cook Master app!</string>
 </resources>

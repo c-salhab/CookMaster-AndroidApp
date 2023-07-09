@@ -10,7 +10,10 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,14 +31,15 @@ import org.json.JSONObject;
 public class LessonsActivity extends AppCompatActivity {
 
     private AdView mAdView;
-    private Button btn_1;
-    private String userEmail;
-
+    private Button btn_1, btn_2;
+    private ListView listView;
+    private ArrayAdapter<String> adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lessons);
         this.btn_1 = findViewById(R.id.button_1);
+        this.btn_2 = findViewById(R.id.button_2);
         this.btn_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -45,7 +49,20 @@ public class LessonsActivity extends AppCompatActivity {
             }
         });
 
+
+        this.btn_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(LessonsActivity.this, ProfileActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
+
         verifySubscription();
+
+        listView = findViewById(R.id.list_view);
+
         getLessons();
     }
 
@@ -87,15 +104,16 @@ public class LessonsActivity extends AppCompatActivity {
                     if (fetchData.onComplete()) {
                         String result = fetchData.getResult();
 
-                        if (result.equals("1")) {
+                        if (!result.equals("1")) {
                             MobileAds.initialize(LessonsActivity.this, new OnInitializationCompleteListener() {
                                 @Override
                                 public void onInitializationComplete(InitializationStatus initializationStatus) {
-                                    mAdView = findViewById(R.id.adView);
-                                    AdRequest adRequest = new AdRequest.Builder().build();
-                                    mAdView.loadAd(adRequest);
                                 }
                             });
+
+                            mAdView = findViewById(R.id.adView);
+                            AdRequest adRequest = new AdRequest.Builder().build();
+                            mAdView.loadAd(adRequest);
                         }
                     }
                 }
@@ -115,19 +133,26 @@ public class LessonsActivity extends AppCompatActivity {
 
                         try {
                             JSONArray lessonsArray = new JSONArray(result);
-                            StringBuilder stringBuilder = new StringBuilder();
+                            String[] lessons = new String[lessonsArray.length()];
 
                             for (int i = 0; i < lessonsArray.length(); i++) {
                                 JSONObject lessonObject = lessonsArray.getJSONObject(i);
-                                int lessonId = lessonObject.getInt("id");
                                 String lessonTitle = lessonObject.getString("name");
-
-                                stringBuilder.append(i).append("-  Lesson ID: ").append(lessonId);
-                                stringBuilder.append("  Title: ").append(lessonTitle).append("\n");
+                                lessons[i] = lessonTitle;
                             }
 
-                            TextView textViewLessons = findViewById(R.id.textViewLessons);
-                            textViewLessons.setText(stringBuilder.toString());
+                            adapter = new ArrayAdapter<>(LessonsActivity.this, android.R.layout.simple_list_item_1, lessons);
+                            listView.setAdapter(adapter);
+
+                            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                                    String selectedLesson = (String) adapterView.getItemAtPosition(position);
+                                    Intent intent = new Intent(LessonsActivity.this, LessonDetailActivity.class);
+                                    intent.putExtra("lessonTitle", selectedLesson);
+                                    startActivity(intent);
+                                }
+                            });
 
                         } catch (JSONException e) {
                             e.printStackTrace();
