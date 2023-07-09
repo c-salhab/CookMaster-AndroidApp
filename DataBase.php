@@ -72,8 +72,10 @@ class DataBase
         return $lessons;
     }
 
-    function getSubscription($userId) {
-        $this->sql = "SELECT subscription_id FROM users WHERE id = " . $userId;
+
+    function getSubscriptionByEmail($email) {
+        $email = $this->prepareData($email);
+        $this->sql = "SELECT subscription_id FROM users WHERE email = '" . $email . "'";
         $result = mysqli_query($this->connect, $this->sql);
 
         if (mysqli_num_rows($result) > 0) {

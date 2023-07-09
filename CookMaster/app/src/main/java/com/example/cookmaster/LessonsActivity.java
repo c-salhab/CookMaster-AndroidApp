@@ -104,16 +104,15 @@ public class LessonsActivity extends AppCompatActivity {
                     if (fetchData.onComplete()) {
                         String result = fetchData.getResult();
 
-                        if (!result.equals("1")) {
+                        if (result.equals("1")) {
                             MobileAds.initialize(LessonsActivity.this, new OnInitializationCompleteListener() {
                                 @Override
                                 public void onInitializationComplete(InitializationStatus initializationStatus) {
+                                    mAdView = findViewById(R.id.adView);
+                                    AdRequest adRequest = new AdRequest.Builder().build();
+                                    mAdView.loadAd(adRequest);
                                 }
                             });
-
-                            mAdView = findViewById(R.id.adView);
-                            AdRequest adRequest = new AdRequest.Builder().build();
-                            mAdView.loadAd(adRequest);
                         }
                     }
                 }
