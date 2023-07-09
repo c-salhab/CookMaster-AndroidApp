@@ -96,8 +96,9 @@ public class LessonsActivity extends AppCompatActivity {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                Intent intent = getIntent();
-                String userEmail = intent.getStringExtra("email");
+
+                SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                String userEmail = preferences.getString("email", "");
 
                 FetchData fetchData = new FetchData("https://yourcookmaster.com/android/get_subscription.php?email=" + userEmail);
                 if (fetchData.startFetch()) {
