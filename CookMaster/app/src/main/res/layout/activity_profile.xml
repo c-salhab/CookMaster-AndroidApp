@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FEFEE0"
     tools:context=".ProfileActivity">
 
     <RelativeLayout
@@ -25,27 +26,72 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_below="@id/back_button"
-            android:gravity="center">
+            android:gravity="center"
+            android:layout_marginTop="-85dp">
 
             <TextView
-                android:id="@+id/text_activity_text_view"
+                android:id="@+id/fname_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
+                android:padding="14dp"
+                android:text="@string/first_name"
+                android:textColor="@color/colorAccent"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/fname_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:padding="16dp" />
+
+            <TextView
+                android:id="@+id/lname_title_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="@string/last_name"
+                android:textColor="@color/colorAccent"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/lname_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
                 android:padding="16dp" />
 
             <TextView
                 android:id="@+id/email_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Email:"
+                android:padding="16dp"
+                android:text="@string/email"
                 android:textColor="@color/colorAccent"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                android:padding="16dp" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/email_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:padding="16dp" />
+
+            <TextView
+                android:id="@+id/subscription_title_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="@string/subscription"
+                android:textColor="@color/colorAccent"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/subscription_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
@@ -55,7 +101,7 @@
                 android:id="@+id/logout_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Logout"
+                android:text="@string/logout"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="@color/colorAccent"
                 android:textColor="@color/white"/>

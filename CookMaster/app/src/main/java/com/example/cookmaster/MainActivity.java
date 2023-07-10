@@ -11,9 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -36,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Reader
 
         if (nfcAdapter == null) {
 
-            Toast.makeText(this, "NFC n'est pas supporté sur cet appareil.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "NFC is not supported on the following Mobile Phone.", Toast.LENGTH_SHORT).show();
             return;
         }
 

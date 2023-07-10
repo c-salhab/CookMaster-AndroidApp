@@ -15,4 +15,3 @@ class DataBaseConfig
         $this->databasename = 'cook_master';
     }
 }
-

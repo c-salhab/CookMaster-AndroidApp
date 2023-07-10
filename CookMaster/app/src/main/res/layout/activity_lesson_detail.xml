@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FEFEE0"
     tools:context=".LessonDetailActivity">
 
     <RelativeLayout
@@ -31,13 +32,13 @@
                 android:id="@+id/formation_title_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:padding="16dp"
                 android:text="Formation:"
+                android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                android:textAlignment="center"
-                android:padding="16dp"
-                android:gravity="center_horizontal" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/lesson_title_text_view"

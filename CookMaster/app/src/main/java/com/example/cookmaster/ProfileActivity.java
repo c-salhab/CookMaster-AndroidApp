@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -21,12 +20,13 @@ import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.vishnusivadas.advanced_httpurlconnection.FetchData;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class ProfileActivity extends AppCompatActivity {
 
     private Button logoutButton;
     private ImageButton backButton;
-    private TextView emailTextView;
-
     private AdView mAdView;
 
     @Override
@@ -38,7 +38,6 @@ public class ProfileActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent i = new Intent(ProfileActivity.this, LessonsActivity.class);
                 startActivity(i);
                 finish();
@@ -57,21 +56,7 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
 
-        SharedPreferences sharedPrefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        String userEmail = sharedPrefs.getString("email", "");
-
-        emailTextView = findViewById(R.id.email_text_view);
-        if (!userEmail.isEmpty()) {
-            emailTextView.setText(userEmail);
-        } else {
-            emailTextView.setText("No email found");
-        }
-
-        TextView textActivityTextView = findViewById(R.id.text_activity_text_view);
-        textActivityTextView.setText(R.string.hi);
-        textActivityTextView.setTypeface(null, Typeface.ITALIC);
-
-
+        getInfoUser();
         verifySubscription();
 
     }
@@ -99,6 +84,45 @@ public class ProfileActivity extends AppCompatActivity {
                                     mAdView.loadAd(adRequest);
                                 }
                             });
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    public void getInfoUser(){
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+
+                SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                String userEmail = preferences.getString("email", "");
+
+                FetchData fetchData = new FetchData("https://yourcookmaster.com/android/get_info_users.php?email=" + userEmail);
+                if (fetchData.startFetch()) {
+                    if (fetchData.onComplete()) {
+                        String result = fetchData.getResult();
+
+                        try {
+                            JSONObject userInfoObject = new JSONObject(result);
+                            String firstName = userInfoObject.getString("first_name");
+                            String lastName = userInfoObject.getString("last_name");
+                            String subscription = userInfoObject.getString("subscription_name");
+
+                            TextView fnameTextView = findViewById(R.id.fname_text_view);
+                            TextView lnameTextView = findViewById(R.id.lname_text_view);
+                            TextView emailTextView = findViewById(R.id.email_text_view);
+                            TextView subscriptionTextView = findViewById(R.id.subscription_text_view);
+
+                            fnameTextView.setText(firstName);
+                            lnameTextView.setText(lastName);
+                            emailTextView.setText(userEmail);
+                            subscriptionTextView.setText(subscription);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
                     }
                 }

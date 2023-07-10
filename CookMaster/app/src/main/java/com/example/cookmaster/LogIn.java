@@ -60,7 +60,6 @@ public class LogIn extends AppCompatActivity {
                                         SharedPreferences sharedPrefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
                                         SharedPreferences.Editor editor = sharedPrefs.edit();
                                         editor.putString("email", username);
-                                        editor.putBoolean("isLoggedIn", true);
                                         editor.apply();
 
                                         Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();

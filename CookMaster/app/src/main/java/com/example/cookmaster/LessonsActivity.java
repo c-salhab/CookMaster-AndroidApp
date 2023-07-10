@@ -8,14 +8,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -34,6 +31,8 @@ public class LessonsActivity extends AppCompatActivity {
     private Button btn_1, btn_2;
     private ListView listView;
     private ArrayAdapter<String> adapter;
+    private String userEmail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +48,6 @@ public class LessonsActivity extends AppCompatActivity {
             }
         });
 
-
         this.btn_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,36 +57,8 @@ public class LessonsActivity extends AppCompatActivity {
             }
         });
 
-        verifySubscription();
-
         listView = findViewById(R.id.list_view);
-
         getLessons();
-    }
-
-    public void call() {
-        new androidx.appcompat.app.AlertDialog.Builder(LessonsActivity.this)
-                .setTitle(getResources().getString(R.string.popup_titre))
-                .setMessage(getResources().getString(R.string.popup_message))
-                .setPositiveButton(getResources().getString(R.string.popup_oui), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        finish();
-                    }
-                })
-                .setNegativeButton(getResources().getString(R.string.popup_non), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                })
-                .setCancelable(false)
-                .show();
-    }
-
-    @Override
-    public void onBackPressed() {
-        call();
     }
 
     public void verifySubscription() {
@@ -96,15 +66,10 @@ public class LessonsActivity extends AppCompatActivity {
         handler.post(new Runnable() {
             @Override
             public void run() {
-
-                SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-                String userEmail = preferences.getString("email", "");
-
                 FetchData fetchData = new FetchData("https://yourcookmaster.com/android/get_subscription.php?email=" + userEmail);
                 if (fetchData.startFetch()) {
                     if (fetchData.onComplete()) {
                         String result = fetchData.getResult();
-
                         if (result.equals("1")) {
                             MobileAds.initialize(LessonsActivity.this, new OnInitializationCompleteListener() {
                                 @Override
@@ -130,7 +95,6 @@ public class LessonsActivity extends AppCompatActivity {
                 if (fetchData.startFetch()) {
                     if (fetchData.onComplete()) {
                         String result = fetchData.getResult();
-
                         try {
                             JSONArray lessonsArray = new JSONArray(result);
                             String[] lessons = new String[lessonsArray.length()];
@@ -161,5 +125,29 @@ public class LessonsActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        call();
+    }
+
+    public void call() {
+        new androidx.appcompat.app.AlertDialog.Builder(LessonsActivity.this)
+                .setTitle(getResources().getString(R.string.popup_titre))
+                .setMessage(getResources().getString(R.string.popup_message))
+                .setPositiveButton(getResources().getString(R.string.popup_oui), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                })
+                .setNegativeButton(getResources().getString(R.string.popup_non), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                })
+                .setCancelable(false)
+                .show();
     }
 }

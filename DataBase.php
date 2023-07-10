@@ -72,7 +72,6 @@ class DataBase
         return $lessons;
     }
 
-
     function getSubscriptionByEmail($email) {
         $email = $this->prepareData($email);
         $this->sql = "SELECT subscription_id FROM users WHERE email = '" . $email . "'";
@@ -86,4 +85,24 @@ class DataBase
 
         return null;
     }
+
+    function getInfosUser($email) {
+        $email = $this->prepareData($email);
+        $this->sql = "SELECT users.first_name, users.last_name, users.subscription_id, subscriptions.name AS subscription_name FROM users INNER JOIN subscriptions ON users.subscription_id = subscriptions.id WHERE users.email = '" . $email . "'";
+        $result = mysqli_query($this->connect, $this->sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            $row = mysqli_fetch_assoc($result);
+            $userInfo = array(
+                'first_name' => $row['first_name'],
+                'last_name' => $row['last_name'],
+                'subscription_id' => $row['subscription_id'],
+                'subscription_name' => $row['subscription_name']
+            );
+            return $userInfo;
+        } else {
+            return null;
+        }
+    }
+
 }

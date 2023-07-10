@@ -7,7 +7,7 @@ $db = new DataBase();
 if (isset($_POST['username']) && isset($_POST['password'])) {
     if ($db->dbConnect()) {
         if ($db->logIn("users", $_POST['username'], $_POST['password'])) {
-            session_start(); 
+            session_start();
             $_SESSION['username'] = $_POST['username'];
             echo "Login Success";
         } else {
