@@ -94,16 +94,20 @@ public class LessonDetailActivity extends Activity {
 
                             for (int i = 0; i < lessonsArray.length(); i++) {
                                 JSONObject lessonObject = lessonsArray.getJSONObject(i);
-                                String lessonTitle = lessonObject.getString("name");
-                                String lessonDescription = lessonObject.getString("description");
+                                String lessonTitle = lessonObject.getString("title");
+                                String lessonLink = lessonObject.getString("url_to_exam");
+                                String lessonDate = lessonObject.getString("date_of_exam");
 
                                 if (lessonTitle.equals(title)) {
 
                                     TextView lessonTitleTextView = findViewById(R.id.lesson_title_text_view);
                                     lessonTitleTextView.setText(lessonTitle);
 
-                                    TextView lessonDescriptionTextView = findViewById(R.id.link_content_text_view);
-                                    lessonDescriptionTextView.setText(lessonDescription);
+                                    TextView lessonLinkTextView = findViewById(R.id.link_content_text_view);
+                                    lessonLinkTextView.setText(lessonLink);
+
+                                    TextView lessonDateTextView = findViewById(R.id.date_content_text_view);
+                                    lessonDateTextView.setText(lessonDate);
                                 }
                             }
 

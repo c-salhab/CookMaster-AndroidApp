@@ -91,7 +91,7 @@ class DataBase
 
     function getUserFormations($email) {
         $email = $this->prepareData($email);
-        $this->sql = "SELECT classes.id, classes.title FROM possess_classes INNER JOIN classes ON possess_classes.class_id = classes.id WHERE possess_classes.user_id = (SELECT id FROM users WHERE email = '$email')";
+        $this->sql = "SELECT classes.id, classes.title, possess_classes.url_to_exam, possess_classes.date_of_exam FROM possess_classes INNER JOIN classes ON possess_classes.class_id = classes.id WHERE possess_classes.user_id = (SELECT id FROM users WHERE email = '$email')";
         $result = mysqli_query($this->connect, $this->sql);
 
         $userFormations = [];
@@ -100,11 +100,14 @@ class DataBase
                 $userFormations[] = [
                     'id' => $row['id'],
                     'title' => $row['title'],
+                    'url_to_exam' => $row['url_to_exam'],
+                    'date_of_exam' => $row['date_of_exam']
                 ];
             }
         }
 
         return $userFormations;
     }
+
 
 }
