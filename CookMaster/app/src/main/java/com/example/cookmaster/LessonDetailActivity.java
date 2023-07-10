@@ -17,6 +17,10 @@ import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.vishnusivadas.advanced_httpurlconnection.FetchData;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class LessonDetailActivity extends Activity {
     private TextView lessonTitleTextView;
     private TextView lessonContentTextView;
@@ -37,13 +41,7 @@ public class LessonDetailActivity extends Activity {
             }
         });
 
-        String lessonTitle = getIntent().getStringExtra("lessonTitle");
-
-        lessonTitleTextView = findViewById(R.id.lesson_title_text_view);
-        lessonContentTextView = findViewById(R.id.lesson_content_text_view);
-
-        lessonTitleTextView.setText(lessonTitle);
-
+        getLessons();
         verifySubscription();
     }
 
@@ -70,6 +68,47 @@ public class LessonDetailActivity extends Activity {
                                     mAdView.loadAd(adRequest);
                                 }
                             });
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    public void getLessons() {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+
+                SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                String userEmail = preferences.getString("email", "");
+
+                FetchData fetchData = new FetchData("https://yourcookmaster.com/android/get_lessons.php?email=" + userEmail);
+                String title = getIntent().getStringExtra("lessonTitle");
+                if (fetchData.startFetch()) {
+                    if (fetchData.onComplete()) {
+                        String result = fetchData.getResult();
+                        try {
+                            JSONArray lessonsArray = new JSONArray(result);
+
+                            for (int i = 0; i < lessonsArray.length(); i++) {
+                                JSONObject lessonObject = lessonsArray.getJSONObject(i);
+                                String lessonTitle = lessonObject.getString("name");
+                                String lessonDescription = lessonObject.getString("description");
+
+                                if (lessonTitle.equals(title)) {
+
+                                    TextView lessonTitleTextView = findViewById(R.id.lesson_title_text_view);
+                                    lessonTitleTextView.setText(lessonTitle);
+
+                                    TextView lessonDescriptionTextView = findViewById(R.id.lesson_content_text_view);
+                                    lessonDescriptionTextView.setText(lessonDescription);
+                                }
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
                     }
                 }

@@ -105,4 +105,23 @@ class DataBase
         }
     }
 
+    function getUserFormations($email) {
+        $email = $this->prepareData($email);
+        $this->sql = "SELECT formations.id, formations.name, formations.description FROM user_formation INNER JOIN formations ON user_formation.formation_id = formations.id WHERE user_formation.user_id = (SELECT id FROM users WHERE email = '$email')";
+        $result = mysqli_query($this->connect, $this->sql);
+
+        $userFormations = [];
+        if ($result && mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $userFormations[] = [
+                    'id' => $row['id'],
+                    'name' => $row['name'],
+                    'description' => $row['description']
+                ];
+            }
+        }
+
+        return $userFormations;
+    }
+
 }
