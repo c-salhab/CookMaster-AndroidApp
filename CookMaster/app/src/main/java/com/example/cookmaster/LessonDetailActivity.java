@@ -80,7 +80,6 @@ public class LessonDetailActivity extends Activity {
         handler.post(new Runnable() {
             @Override
             public void run() {
-
                 SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
                 String userEmail = preferences.getString("email", "");
 
@@ -99,18 +98,24 @@ public class LessonDetailActivity extends Activity {
                                 String lessonDate = lessonObject.getString("date_of_exam");
 
                                 if (lessonTitle.equals(title)) {
-
                                     TextView lessonTitleTextView = findViewById(R.id.lesson_title_text_view);
                                     lessonTitleTextView.setText(lessonTitle);
 
                                     TextView lessonLinkTextView = findViewById(R.id.link_content_text_view);
-                                    lessonLinkTextView.setText(lessonLink);
+                                    if (!lessonLink.equals("null")) {
+                                        lessonLinkTextView.setText(lessonLink);
+                                    } else {
+                                        lessonLinkTextView.setText("No URL chosen");
+                                    }
 
                                     TextView lessonDateTextView = findViewById(R.id.date_content_text_view);
-                                    lessonDateTextView.setText(lessonDate);
+                                    if (!lessonDate.equals("null")) {
+                                        lessonDateTextView.setText(lessonDate);
+                                    } else {
+                                        lessonDateTextView.setText("No date chosen");
+                                    }
                                 }
                             }
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -119,4 +124,5 @@ public class LessonDetailActivity extends Activity {
             }
         });
     }
+
 }
