@@ -102,7 +102,7 @@ public class LessonDetailActivity extends Activity {
                                     TextView lessonTitleTextView = findViewById(R.id.lesson_title_text_view);
                                     lessonTitleTextView.setText(lessonTitle);
 
-                                    TextView lessonDescriptionTextView = findViewById(R.id.lesson_content_text_view);
+                                    TextView lessonDescriptionTextView = findViewById(R.id.link_content_text_view);
                                     lessonDescriptionTextView.setText(lessonDescription);
                                 }
                             }

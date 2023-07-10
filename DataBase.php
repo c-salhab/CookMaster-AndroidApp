@@ -56,22 +56,6 @@ class DataBase
         }
     }
 
-    function getLessons()
-    {
-        $this->sql = "SELECT * FROM users";
-        $result = mysqli_query($this->connect, $this->sql);
-
-        $lessons = array();
-
-        if (mysqli_num_rows($result) > 0) {
-            while ($row = mysqli_fetch_assoc($result)) {
-                $lessons[] = $row;
-            }
-        }
-
-        return $lessons;
-    }
-
     function getSubscriptionByEmail($email) {
         $email = $this->prepareData($email);
         $this->sql = "SELECT subscription_id FROM users WHERE email = '" . $email . "'";
@@ -107,7 +91,7 @@ class DataBase
 
     function getUserFormations($email) {
         $email = $this->prepareData($email);
-        $this->sql = "SELECT formations.id, formations.name, formations.description FROM user_formation INNER JOIN formations ON user_formation.formation_id = formations.id WHERE user_formation.user_id = (SELECT id FROM users WHERE email = '$email')";
+        $this->sql = "SELECT classes.id, classes.title FROM possess_classes INNER JOIN classes ON possess_classes.class_id = classes.id WHERE possess_classes.user_id = (SELECT id FROM users WHERE email = '$email')";
         $result = mysqli_query($this->connect, $this->sql);
 
         $userFormations = [];
@@ -115,8 +99,7 @@ class DataBase
             while ($row = mysqli_fetch_assoc($result)) {
                 $userFormations[] = [
                     'id' => $row['id'],
-                    'name' => $row['name'],
-                    'description' => $row['description']
+                    'title' => $row['title'],
                 ];
             }
         }

@@ -21,4 +21,6 @@
     <string name="formation">Formation:</string>
     <string name="description">Description:</string>
     <string name="there_is_a_surprise_here">There is a surprise here !</string>
+    <string name="link">Link :</string>
+    <string name="date">Date :</string>
 </resources>

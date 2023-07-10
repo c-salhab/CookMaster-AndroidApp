@@ -113,7 +113,7 @@ public class LessonsActivity extends AppCompatActivity {
 
                             for (int i = 0; i < lessonsArray.length(); i++) {
                                 JSONObject lessonObject = lessonsArray.getJSONObject(i);
-                                String lessonTitle = lessonObject.getString("name");
+                                String lessonTitle = lessonObject.getString("title");
                                 lessons[i] = lessonTitle;
                             }
 
