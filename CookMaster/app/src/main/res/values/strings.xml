@@ -23,4 +23,6 @@
     <string name="there_is_a_surprise_here">There is a surprise here !</string>
     <string name="link">Link :</string>
     <string name="date">Date :</string>
+    <string name="with_date">With Date</string>
+    <string name="with_no_date">With No Date</string>
 </resources>
