@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.google.android.gms.ads.AdRequest;
@@ -28,7 +29,8 @@ import org.json.JSONObject;
 public class LessonsActivity extends AppCompatActivity {
 
     private AdView mAdView;
-    private Button btn_1, btn_2;
+    private ImageButton btn_1;
+    private ImageButton btn_2;
     private ListView listView;
     private ArrayAdapter<String> adapter;
     private String userEmail;

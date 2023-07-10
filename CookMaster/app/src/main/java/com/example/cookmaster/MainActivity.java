@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,7 +23,7 @@ import com.vishnusivadas.advanced_httpurlconnection.FetchData;
 
 public class MainActivity extends AppCompatActivity implements NfcAdapter.ReaderCallback {
     private NfcAdapter nfcAdapter;
-    private Button btn_2;
+    private ImageButton btn_2;
     private AdView mAdView;
 
     @Override
