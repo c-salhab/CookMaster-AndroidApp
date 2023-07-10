@@ -3,9 +3,14 @@ package com.example.cookmaster;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -103,10 +108,21 @@ public class LessonDetailActivity extends Activity {
 
                                     TextView lessonLinkTextView = findViewById(R.id.link_content_text_view);
                                     if (!lessonLink.equals("null")) {
-                                        lessonLinkTextView.setText(lessonLink);
+                                        SpannableString spannableString = new SpannableString("Click here");
+                                        ClickableSpan clickableSpan = new ClickableSpan() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(lessonLink));
+                                                startActivity(intent);
+                                            }
+                                        };
+                                        spannableString.setSpan(clickableSpan, 0, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                        lessonLinkTextView.setText(spannableString);
+                                        lessonLinkTextView.setMovementMethod(LinkMovementMethod.getInstance());
                                     } else {
                                         lessonLinkTextView.setText("No URL chosen");
                                     }
+
 
                                     TextView lessonDateTextView = findViewById(R.id.date_content_text_view);
                                     if (!lessonDate.equals("null")) {
