@@ -42,17 +42,28 @@
         android:layout_marginTop="50dp">
 
         <Button
+            android:id="@+id/btn_all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
+            android:layout_weight="0.3"
+            android:backgroundTint="@color/colorAccent"
+            android:text="@string/all"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btn_with_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
             android:backgroundTint="@color/colorAccent"
             android:text="@string/with_date"
             android:textColor="@color/white" />
 
         <Button
+            android:id="@+id/btn_with_no_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
+            android:layout_weight="0.3"
             android:backgroundTint="@color/colorAccent"
             android:text="@string/with_no_date"
             android:textColor="@color/white" />

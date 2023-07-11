@@ -25,4 +25,5 @@
     <string name="date">Date :</string>
     <string name="with_date">With Date</string>
     <string name="with_no_date">With No Date</string>
+    <string name="all">All</string>
 </resources>
