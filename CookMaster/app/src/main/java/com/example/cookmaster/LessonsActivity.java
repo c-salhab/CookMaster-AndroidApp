@@ -1,37 +1,27 @@
 package com.example.cookmaster;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
-
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.vishnusivadas.advanced_httpurlconnection.FetchData;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,12 +88,13 @@ public class LessonsActivity extends AppCompatActivity {
                 showAllLessons();
             }
         });
+
         verifySubscription();
         listView = findViewById(R.id.list_view);
         getLessons();
     }
 
-    public void verifySubscription() {
+    private void verifySubscription() {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
             @Override
@@ -133,7 +124,7 @@ public class LessonsActivity extends AppCompatActivity {
         });
     }
 
-    public void getLessons() {
+    private void getLessons() {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
             @Override
@@ -206,7 +197,7 @@ public class LessonsActivity extends AppCompatActivity {
         getLessons();
     }
 
-    public void filterLessonsWithoutDate() {
+    private void filterLessonsWithoutDate() {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
             @Override
@@ -254,7 +245,7 @@ public class LessonsActivity extends AppCompatActivity {
         });
     }
 
-    public void filterLessonsWithDate(){
+    private void filterLessonsWithDate(){
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
             @Override

@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -34,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Reader
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
         if (nfcAdapter == null) {
-
             Toast.makeText(this, "NFC is not supported on the following Mobile Phone.", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -55,9 +53,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Reader
     @Override
     protected void onResume() {
         super.onResume();
-
         if (nfcAdapter.isEnabled()) {
-
             nfcAdapter.enableReaderMode(this, this, NfcAdapter.FLAG_READER_NFC_A | NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK, null);
         }
     }
@@ -65,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Reader
     @Override
     protected void onPause() {
         super.onPause();
-
         nfcAdapter.disableReaderMode(this);
     }
 
@@ -79,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Reader
         });
     }
 
-    public void verifySubscription() {
+    private void verifySubscription() {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
             @Override

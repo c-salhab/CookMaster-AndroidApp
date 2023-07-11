@@ -27,6 +27,7 @@ public class LogIn extends AppCompatActivity {
 
         textInputEditTextUsername = findViewById(R.id.username);
         textInputEditTextPassword = findViewById(R.id.password);
+
         buttonLogin = findViewById(R.id.buttonLogin);
         progressBar = findViewById(R.id.progress);
 
@@ -34,11 +35,13 @@ public class LogIn extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 final String username, password;
+
                 username = String.valueOf(textInputEditTextUsername.getText());
                 password = String.valueOf(textInputEditTextPassword.getText());
 
                 if (!username.isEmpty() && !password.isEmpty()) {
                     progressBar.setVisibility(View.VISIBLE);
+
                     Handler handler = new Handler();
                     handler.post(new Runnable() {
                         @Override
@@ -57,6 +60,7 @@ public class LogIn extends AppCompatActivity {
                                     progressBar.setVisibility(View.GONE);
                                     String result = putData.getResult();
                                     if (result.equals("Login Success")) {
+
                                         SharedPreferences sharedPrefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
                                         SharedPreferences.Editor editor = sharedPrefs.edit();
                                         editor.putString("email", username);
@@ -66,6 +70,7 @@ public class LogIn extends AppCompatActivity {
                                         Intent lessonsIntent = new Intent(LogIn.this, LessonsActivity.class);
                                         lessonsIntent.putExtra("email", username);
                                         startActivity(lessonsIntent);
+
                                     } else {
                                         Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
                                     }

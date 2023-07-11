@@ -55,13 +55,12 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-
         getInfoUser();
         verifySubscription();
 
     }
 
-    public void verifySubscription() {
+    private void verifySubscription() {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
             @Override
@@ -91,7 +90,7 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
-    public void getInfoUser(){
+    private void getInfoUser(){
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
             @Override

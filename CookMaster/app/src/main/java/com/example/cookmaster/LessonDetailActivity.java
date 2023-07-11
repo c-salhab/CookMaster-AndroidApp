@@ -14,23 +14,18 @@ import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.vishnusivadas.advanced_httpurlconnection.FetchData;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LessonDetailActivity extends Activity {
-    private TextView lessonTitleTextView;
-    private TextView lessonContentTextView;
     private AdView mAdView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +45,7 @@ public class LessonDetailActivity extends Activity {
         verifySubscription();
     }
 
-    public void verifySubscription() {
+    private void verifySubscription() {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
             @Override
@@ -80,7 +75,7 @@ public class LessonDetailActivity extends Activity {
         });
     }
 
-    public void getLessons() {
+    private void getLessons() {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
             @Override
@@ -120,7 +115,7 @@ public class LessonDetailActivity extends Activity {
                                         lessonLinkTextView.setText(spannableString);
                                         lessonLinkTextView.setMovementMethod(LinkMovementMethod.getInstance());
                                     } else {
-                                        lessonLinkTextView.setText("No URL chosen");
+                                        lessonLinkTextView.setText(R.string.no_url);
                                     }
 
 
@@ -128,7 +123,7 @@ public class LessonDetailActivity extends Activity {
                                     if (!lessonDate.equals("null")) {
                                         lessonDateTextView.setText(lessonDate);
                                     } else {
-                                        lessonDateTextView.setText("No date chosen");
+                                        lessonDateTextView.setText(R.string.no_date);
                                     }
                                 }
                             }
