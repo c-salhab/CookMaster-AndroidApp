@@ -6,7 +6,7 @@ $db = new DataBase();
 
 if ($db->dbConnect()) {
 
-    $email = $_GET['email'];
+    $email = isset($_GET['email']) ? $_GET['email'] : "";
     $formations = $db->getUserFormations($email);
 
     if (!empty($formations)) {

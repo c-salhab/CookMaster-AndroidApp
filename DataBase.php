@@ -45,8 +45,6 @@ class DataBase
             $dbname = $row['email'];
             $dbpassword = $row['password'];
             if ($dbname == $name && password_verify($password, $dbpassword)) {
-                session_start();
-                $_SESSION['email'] = $name;
                 return true;
             } else {
                 return false;
@@ -108,6 +106,5 @@ class DataBase
 
         return $userFormations;
     }
-
 
 }
